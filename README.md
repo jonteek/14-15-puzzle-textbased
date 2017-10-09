@@ -1,2 +1,2 @@
-# 14-15-puzzle-textbased
+# 14-15-puzzle
 Implementation of the 14-15 puzzle in python

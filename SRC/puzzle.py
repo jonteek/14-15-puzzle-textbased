@@ -120,6 +120,8 @@ def main():
         
     a.initBoard(difficulty)
     print("\nWelcome to the fifteen puzzle")
+    print("Your task is to arrange the numbers in ascending order")
+    print("You may only swap the positions of the 16 and those numbers in the squares that touch it")
     print("\nPress 0 to quit the game")
     a.displayBoard()
     

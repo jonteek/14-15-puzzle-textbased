@@ -5,13 +5,19 @@ class numberPuzzle:
         self.emptySlotPosition = None
 
     def shuffleBoard(self,inputList,difficulty):
+        #Chooses a random position ands swaps the element with the element in the next position
+        #How many times this is performed is decided by the value of the variable numberOfInversions
         if difficulty == 1 :
             numberOfInversions = 32
-        if difficulty == 2 :
+        elif difficulty == 2 :
             numberOfInversions = 64
-        if difficulty == 3 :
+        elif difficulty == 3 :
             numberOfInversions = 128
-        if difficulty == 4 :
+        elif difficulty == 4 :
+            numberOfInversions = 256
+        elif difficulty == 0:
+            numberOfInversions = 4096
+        else:
             numberOfInversions = 256
         while (numberOfInversions >= 1):
             positionToChange = random.randint(1,14)
@@ -25,7 +31,7 @@ class numberPuzzle:
             
             
         
-    def initBoard(self,difficulty):
+    def initBoard(self,difficulty): #initializes the board and shuffles it
         self.emptySlotPosition = 16
         self.board.append(0)
         for j in range(1,16):
@@ -52,7 +58,7 @@ class numberPuzzle:
         print('|\t%s\t|\t%s\t|\t%s\t|\t%s\t|' % (d[13], d[14], d[15], d[16]))
         print('+---------------+---------------+---------------+---------------+')
         
-    def allowedMoves(self):
+    def allowedMoves(self):#Decides the allowed moves given the position of the empty slot
         position = self.emptySlotPosition
 
         if position in [2,3]:
@@ -82,7 +88,7 @@ class numberPuzzle:
         elif position == 16:
             return [position - 1, position - 4]
 
-    def changePosition(self,newPosition):
+    def changePosition(self,newPosition):#Changes the position and updates the position of the empty slot
         currentPos = self.emptySlotPosition
         currentPosContents = self.board[currentPos]
         newPosContents = self.board[newPosition]
@@ -106,16 +112,24 @@ def main():
     a = numberPuzzle()
     print("Choose Difficulty Between 1 and 4\n")
     difficulty = int(input())
+    
+    if difficulty > 4:
+        print("The highest difficulty is 4. This is now the difficulty that will apply to this puzzle")
+    elif difficulty == 0:
+        print("Hmmp, a bit of a trickster you may be perhaps. Let's see if you can complete a super difficult puzzle")
+        
     a.initBoard(difficulty)
     print("\nWelcome to the fifteen puzzle")
     print("\nPress 0 to quit the game")
     a.displayBoard()
+    
     while a.isComplete() == False:
         allowedPositions = a.allowedMoves()
         print("The the positions of the squares that are possible to move are")
         print(allowedPositions)
         print("\n")
         x = int(input())
+        
         if x == 0 :
             break
         elif x not in allowedPositions:
@@ -127,7 +141,10 @@ def main():
         else:
             a.changePosition(x)
         a.displayBoard()
-    print("Puzzle Completed")
+        
+    if x == 0:
+        print("Puzzle aborted")
+    else:
+        print("Puzzle Completed")
 
-if( __name__ == " __main__"):
-    main()
+main()
